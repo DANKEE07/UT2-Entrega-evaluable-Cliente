@@ -262,5 +262,33 @@ function ejercicio7() {
       "1. Agregar Tarea, 2. Completar Tarea, 3. Eliminar Tarea, 4. Mostrar Lista, 5. Mostrar Pedientes" +
       "6. Cerrar")
 
+    switch (opcion) {
+      case "1":
+        agregarTarea()
+        break
+
+      case "2":
+        completarTarea()
+        break
+
+      case "3":
+        eliminarTarea()
+        break
+
+      case "4":
+        mostrarLista()
+        break
+
+      case "5":
+        mostrarPedientes()
+        break
+
+      case "6":
+        console.log("Programa cerrado")
+        break
+
+      default:
+        console.log("Opción no válida")
+    }
   } while (opcion !== "6")
 }
