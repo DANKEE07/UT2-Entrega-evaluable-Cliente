@@ -1,14 +1,11 @@
 // Daniel López Muñoz
 // 2ºCFGS: Desarrollo de Aplicaciones Web (DAW)
 // Desarrollo Web en Entorno Cliente
-//
-
 
 function ejercicio1() {
 
   let fraseUsuario = String(prompt("Dime una frase de al menos 5 palabras: "))
-  let fraseUsuarioSeparada = fraseUsuario.split(" ")
-  let fraseUsuarioSinEspacios = fraseUsuario.replaceAll(" ","")
+  let fraseUsuarioSeparada = fraseUsuario.trim().split(" ")
 
   // Importante usar replaceAll y no replace, ya que eso solo eliminar el primer espacio
 
@@ -17,24 +14,43 @@ function ejercicio1() {
     // Aquí no pongo el "let" de nuevo porque estoy modificando las que ya tengo (las que creé arriba)
     // por lo cual no es necesario, ya que estaría creando varibales nuevas
     fraseUsuario = String(prompt("Dime una frase de al menos 5 palabras: "))
-    fraseUsuarioSeparada = fraseUsuario.split(" ")
+    fraseUsuarioSeparada = fraseUsuario.trim().split(" ")
   }
 
+  let fraseUsuarioSinEspacios = fraseUsuario.replaceAll(" ","")
   alert("La frase contiene 5 o más palabras.")
 
   console.log("La frase sin espacios son " + fraseUsuarioSinEspacios.length + " letras")
-  console.log(fraseUsuario.replaceAll("a","*"))
-  console.log(fraseUsuario.replaceAll("e","*"))
-  console.log(fraseUsuario.replaceAll("i","*"))
-  console.log(fraseUsuario.replaceAll("o","*"))
-  console.log(fraseUsuario.replaceAll("u","*"))
-  // No especifica si también debo de hacerlo con mayúsculas, pero si también fueran mayúsculas tendría que ser igual con todas
-  // console.log(fraseUsuario.replaceAll("A","*"))
+  let fraseVocales = fraseUsuario .replaceAll("a", "*")
+    .replaceAll("e", "*")
+    .replaceAll("i", "*")
+    .replaceAll("o", "*")
+    .replaceAll("u", "*")
+    .replaceAll("A", "*")
+    .replaceAll("E", "*")
+    .replaceAll("I", "*")
+    .replaceAll("O", "*")
+    .replaceAll("U", "*")
+  console.log(fraseVocales)
+
   let posicion = 0
   let frasePares = ""
 
-  // Esto ni idea
+  for (let i = 0; i < fraseUsuario.length; i++) {
+    if (fraseUsuario[i] !== " ") {
+      posicion++
 
+      if (posicion % 2 === 0) {
+        frasePares += "_"
+      } else {
+        frasePares += fraseUsuario[i]
+      }
+    } else {
+      frasePares += " "
+    }
+  }
+
+  console.log(frasePares)
 }
 
 function ejercicio2() {
@@ -120,6 +136,7 @@ function ejercicio3() {
 }
 
 function ejercicio4() {
+
   let multiplosDeDos = new Set([0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30])
   let multiplosDeTres = new Set([0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30])
   alert("Mira el log para ver el resultado")
@@ -143,24 +160,107 @@ function ejercicio4() {
 }
 
 function ejercicio5() {
+
   let listaVacia = new Set()
   let numerosUsuario = prompt("Dime una lista de números separados por comas: ")
   numerosUsuario = numerosUsuario.split(",")
 
   for (let numero of numerosUsuario) {
-    let veces = numerosUsuario.filter(numero => numero === numero).length
+    let veces = numerosUsuario.filter(n => n === numero).length
     if (veces === 1) {
       listaVacia.add(Number(numero))
-    } else {
     }
   }
 
+  let sumaNumeros = 0
+  for (let numero of listaVacia) {
+    sumaNumeros += numero
+  }
+  console.log("Los números que aparecen una sola vez son: " + [...listaVacia])
+  // Como listaVacia es un Set, cuando intento concatenarlo directamente con un texto,
+  // JavaScript no sabe mostrar su contenido, y buscando en Internet y con la IA
+  // me ha comentado que "[...]" lo que hace es sacar los elementos del Set y meterlos en un array
+  // Los tres puntos ... son el operador spread
+  console.log("La media de los números es: " + sumaNumeros / listaVacia.size)
 }
 
 function ejercicio6() {
+
+  let frase = prompt("Introduce una frase: ")
+  frase = (frase.toLowerCase())
+  frase = frase.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+
+  // Esto para quitar los acentos de las letras
+
+  frase = frase.replace(" ","")
+
+  let fraseAlReves = frase.split("").reverse().join("")
+  if (fraseAlReves === frase) {
+
+    console.log("La frase es un palíndromo")
+  } else {
+    console.log("La frase no es un palíndromo")
+  }
 
 }
 
 function ejercicio7() {
 
+  // FUNCIONES
+
+  let tareas = new Map();
+
+  function agregarTarea() {
+    let tarea = prompt("Introduce la tarea que quieres añadir: ")
+    tareas.set(tarea, false)
+    console.log("Tarea añadida: " + tarea)
+  }
+
+  function completarTarea() {
+    let tarea = prompt("Introduce la tarea que quieres completar: ")
+    if (tareas.has(tarea)) {
+      tareas.set(tarea, true)
+      console.log("Tarea completada: " + tarea)
+    } else {
+      console.log("La tarea no existe")
+    }
+  }
+
+  function eliminarTarea() {
+    let tarea = prompt("Introduce la tarea que quieres eliminar: ")
+    if (tareas.has(tarea)) {
+      tareas.delete(tarea)
+      console.log("Tarea eliminada: " + tarea)
+    } else {
+      console.log("La tarea no existe")
+    }
+  }
+
+  function mostrarLista() {
+    console.log("Lista de Tareas: ")
+    tareas.forEach(function(completada, tarea){
+      if (completada) {
+        console.log("Tarea completada: " + tarea)
+      } else {
+        console.log("Tarea pendiente: " + tarea)
+      }
+    })
+  }
+
+  function mostrarPedientes() {
+    console.log("Tareas pendientes: ")
+    tareas.forEach(function(completada, tarea){
+      if (!completada) {
+        console.log("Tarea pendiente: " + tarea)
+      }
+    })
+  }
+
+  let opcion
+  do {
+    let opcion = prompt("¿Qué ejercicio quieres ejecutar? (1-7): " +
+      "1. Agregar Tarea, 2. Completar Tarea, 3. Eliminar Tarea, 4. Mostrar Lista, 5. Mostrar Pedientes" +
+      "6. Cerrar")
+
+  } while (opcion !== "6")
 }
