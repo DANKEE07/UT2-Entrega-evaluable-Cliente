@@ -1,3 +1,9 @@
+// Daniel López Muñoz
+// 2ºCFGS: Desarrollo de Aplicaciones Web (DAW)
+// Desarrollo Web en Entorno Cliente
+//
+
+
 function ejercicio1() {
 
   let fraseUsuario = String(prompt("Dime una frase de al menos 5 palabras: "))
@@ -75,14 +81,86 @@ function ejercicio2() {
 }
 
 function ejercicio3() {
-  let alumnos = []
+  let mapaAlumnos = new Map()
 
   for (let i = 0; i < 4; i++) {
     let nombreAlumno = String(prompt("Introduce el nombre del alumno: "))
     let notaAlumno = Number(prompt("Introduce la nota del alumno: "))
+    if (notaAlumno <= 10 && notaAlumno >= 0) {
     let alumno = { nombre: nombreAlumno, nota: notaAlumno }
-    alumnos.push(alumno)
+    mapaAlumnos.set(nombreAlumno, alumno)
+  }else {
+      alert("La nota no puede ser mayor que 10 o menor que 0")
+    }
+}
+
+  let preguntaAUsuario = String(prompt("Dime el nombre del Estudiante del cual quieres ver la nota: "))
+    if (mapaAlumnos.has(preguntaAUsuario)) {
+      alert("La nota del alumno " + preguntaAUsuario + " es " + mapaAlumnos.get(preguntaAUsuario).nota)
+    } else {
+      alert("El alumno no está en la lista, pero podemos añadirlo.")
+
+      let notaAlumnoNuevo = Number(prompt("Introduce la nota del alumno: "))
+      if (notaAlumnoNuevo <= 10 && notaAlumnoNuevo >= 0) {
+        let alumnoNuevo = {nombre: preguntaAUsuario, nota: notaAlumnoNuevo}
+        mapaAlumnos.set(preguntaAUsuario, alumnoNuevo)
+
+        alert("El alumno ha sido añadido a la lista.")
+        alert("El alumno " + mapaAlumnos.get(preguntaAUsuario).nombre + " " + "ha sido añadido con la nota " + mapaAlumnos.get(preguntaAUsuario).nota)
+      } else {
+        alert("La nota no puede ser mayor que 10 o menor que 0")
+      }
+    }
+  let sumaNotas = 0;
+  for (let alumno of mapaAlumnos.values()) {
+    sumaNotas += alumno.nota;
+    }
+    let mediaNotas = sumaNotas / mapaAlumnos.size;
+  console.info("La nota media de la clase es: " + mediaNotas)
+}
+
+function ejercicio4() {
+  let multiplosDeDos = new Set([0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30])
+  let multiplosDeTres = new Set([0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30])
+  alert("Mira el log para ver el resultado")
+
+  console.log("---- UNION DE AMBOS CONJUNTOS ----")
+  console.log(multiplosDeDos.union(multiplosDeTres))
+
+  console.log("//// INTERSECCIÓN DE AMBOS CONJUNTOS ////")
+  console.log(multiplosDeDos.intersection(multiplosDeTres))
+
+  console.log("**** DIFERENCIA DEL PRIMERO MENOS EL SEGUNDO ****")
+  console.log(multiplosDeDos.difference(multiplosDeTres))
+
+  // No sabía que más poner así que he copiado dibujos ASCII de Internet
+  console.log("≽(◉˕ ◉ ≼マ DIFERENCIA DEL SEGUNDO MENOS EL PRIMERO ≽(◉˕ ◉ ≼マ")
+  console.log(multiplosDeTres.difference(multiplosDeDos))
+
+  console.log("ʕ•ᴥ•ʔ RESULTADO DE LA EXCLUSIÓN DE LOS ELEMENTOS QUE PERTENECEN A AMBOS CONJUNTOS ʕ•ᴥ•ʔ")
+  console.log(multiplosDeDos.symmetricDifference(multiplosDeTres))
+
+}
+
+function ejercicio5() {
+  let listaVacia = new Set()
+  let numerosUsuario = prompt("Dime una lista de números separados por comas: ")
+  numerosUsuario = numerosUsuario.split(",")
+
+  for (let numero of numerosUsuario) {
+    let veces = numerosUsuario.filter(numero => numero === numero).length
+    if (veces === 1) {
+      listaVacia.add(Number(numero))
+    } else {
+    }
   }
 
-  console.log(alumnos)
+}
+
+function ejercicio6() {
+
+}
+
+function ejercicio7() {
+
 }
